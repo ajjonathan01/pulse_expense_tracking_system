@@ -1,0 +1,169 @@
+{
+  "summary": {
+    "total": 20,
+    "passed": 20,
+    "failed": 0
+  },
+  "tests": [
+    {
+      "id": "TC-REL-01",
+      "module": "Finance Engine",
+      "description": "Fixed-point paise arithmetic precision (NFR-REL-001: 0.10 + 0.20 = 0.30 exactly)",
+      "status": "PASSED",
+      "duration": "0.09ms",
+      "details": "0.10 + 0.20 computed as 0.3 (paise = 30)"
+    },
+    {
+      "id": "TC-AUTH-01",
+      "module": "M1 Authentication",
+      "description": "User registration validation (FR-AUTH-001: valid email & password strength)",
+      "status": "PASSED",
+      "duration": "0.09ms",
+      "details": "Properly enforces name length, email format, and password complexity"
+    },
+    {
+      "id": "TC-AUTH-02",
+      "module": "M1 Authentication",
+      "description": "Login validation & generic error on invalid credentials (FR-AUTH-002, ERR-05)",
+      "status": "PASSED",
+      "duration": "0.05ms",
+      "details": "Generic error message preserved without leaking field specifics"
+    },
+    {
+      "id": "TC-AUTH-03",
+      "module": "M1 Authentication",
+      "description": "Protected routes redirect when unauthenticated (FR-AUTH-003, ERR-06)",
+      "status": "PASSED",
+      "duration": "0.03ms",
+      "details": "Unauthenticated access strictly blocked on all internal routes"
+    },
+    {
+      "id": "TC-DASH-01",
+      "module": "M2 Dashboard",
+      "description": "KPI aggregates compute accurately for Nov 2025 (FR-DASH-001, BR-01..06)",
+      "status": "PASSED",
+      "duration": "1.69ms",
+      "details": "Exact match: Balance=₹24850, Income=₹32000, Expenses=₹7150, Remaining Budget=₹7850 (47.7% used)"
+    },
+    {
+      "id": "TC-DASH-02",
+      "module": "M2 Dashboard",
+      "description": "Month change refreshes all aggregates and widgets (FR-DASH-002)",
+      "status": "PASSED",
+      "duration": "0.05ms",
+      "details": "Switched to 2025-10: Income=₹30000, Expenses=₹21000 cleanly isolated from Nov"
+    },
+    {
+      "id": "TC-DASH-03",
+      "module": "M2 Dashboard",
+      "description": "Spending by Category donut segments sum to Monthly Expenses (FR-DASH-004)",
+      "status": "PASSED",
+      "duration": "0.18ms",
+      "details": "Categories sum (7150) exactly matches total monthly expenditure (7150)"
+    },
+    {
+      "id": "TC-DASH-04",
+      "module": "M2 Dashboard",
+      "description": "Recent transactions list ordered by date desc (FR-DASH-006)",
+      "status": "PASSED",
+      "duration": "7.00ms",
+      "details": "Top 3 transactions match UI screenshot: Allowance (+2000), Food & Dining (-180), Bus Fare (-50)"
+    },
+    {
+      "id": "TC-TRANS-01",
+      "module": "M3 Transactions",
+      "description": "Create valid transaction with complete schema (FR-TRANS-001, VR-01..06)",
+      "status": "PASSED",
+      "duration": "0.22ms",
+      "details": "Created transaction successfully with ID tx_test_create for ₹450.5"
+    },
+    {
+      "id": "TC-TRANS-02",
+      "module": "M3 Transactions",
+      "description": "Reject negative or zero amounts & invalid decimal places (VR-02, ERR-03, ERR-04)",
+      "status": "PASSED",
+      "duration": "0.06ms",
+      "details": "Properly blocks negative values, zero, and fractions exceeding 2 decimals"
+    },
+    {
+      "id": "TC-TRANS-03",
+      "module": "M3 Transactions",
+      "description": "Edit transaction updates amount and retroactively refreshes totals (FR-TRANS-002, BR-11)",
+      "status": "PASSED",
+      "duration": "0.11ms",
+      "details": "Original: ₹7150 -> Edited: ₹7250 (updated_at timestamp applied)"
+    },
+    {
+      "id": "TC-TRANS-04",
+      "module": "M3 Transactions",
+      "description": "Delete transaction excludes record from all calculations (FR-TRANS-003, BR-12)",
+      "status": "PASSED",
+      "duration": "0.06ms",
+      "details": "Record tx_nov_03 removed; expenses decreased from ₹7,150 to ₹7100"
+    },
+    {
+      "id": "TC-TRANS-05",
+      "module": "M3 Transactions",
+      "description": "Case-insensitive search across description and category (FR-TRANS-004)",
+      "status": "PASSED",
+      "duration": "0.06ms",
+      "details": "Search verified: 'ALLOWANCE' matched 1 row, 'bus' matched 1 row"
+    },
+    {
+      "id": "TC-TRANS-06",
+      "module": "M3 Transactions",
+      "description": "Compound filter combination: Category + Type + Date Range (FR-TRANS-005)",
+      "status": "PASSED",
+      "duration": "0.03ms",
+      "details": "Compound AND query successfully returned 1 matching rows"
+    },
+    {
+      "id": "TC-BUD-01",
+      "module": "M4 Budgets",
+      "description": "Prevent duplicate budget for same user, category, month, and year (FR-BUD-001, ERR-11)",
+      "status": "PASSED",
+      "duration": "0.04ms",
+      "details": "Duplicate budget scopes for same month strictly blocked"
+    },
+    {
+      "id": "TC-BUD-02",
+      "module": "M4 Budgets",
+      "description": "Threshold states: Normal (<80%), Warning (≥80%), Exceeded (>100%) (FR-BUD-005)",
+      "status": "PASSED",
+      "duration": "0.02ms",
+      "details": "Normal, Warning (≥80%), and Exceeded (>100%) thresholds verified with capped bar and true text percentage"
+    },
+    {
+      "id": "TC-BUD-03",
+      "module": "M4 Budgets",
+      "description": "Copy previous month budgets without duplicates (FR-BUD-006)",
+      "status": "PASSED",
+      "duration": "0.05ms",
+      "details": "Copied 5 budgets from Nov 2025 to Dec 2025 with zero duplicate conflicts"
+    },
+    {
+      "id": "TC-ANA-01",
+      "module": "M5 Analytics",
+      "description": "Average daily expenditure (BR-09) & MoM change percentage (BR-16)",
+      "status": "PASSED",
+      "duration": "0.13ms",
+      "details": "Avg Daily: ₹420.59/day on day 17; MoM Income: +6.7%; MoM with 0: n/a"
+    },
+    {
+      "id": "TC-CAT-01",
+      "module": "Categories",
+      "description": "Prevent deletion of category in active use by transactions or budgets (FR-CAT-003)",
+      "status": "PASSED",
+      "duration": "0.04ms",
+      "details": "Active categories protected against accidental deletion with explanatory message"
+    },
+    {
+      "id": "TC-SET-01",
+      "module": "M6 Settings & NFR",
+      "description": "CSV export compliance (FR-SET-004) & Production Bundle Size (NFR-PERF-001 <= 300KB)",
+      "status": "PASSED",
+      "duration": "0.93ms",
+      "details": "CSV schema validated (7 columns); Production JS asset present (1057.4 KB uncompressed, 298.19 KB gzipped <= 300KB NFR-PERF-001)"
+    }
+  ]
+}
